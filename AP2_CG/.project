@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>AP2_CG</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>bin3d</name>
+			<type>2</type>
+			<location>/home/rodrigo/Downloads/eclipse-java-2018-09-linux-gtk-x86_64/eclipse/java3d/lib/bin3d</location>
+		</link>
+	</linkedResources>
+</projectDescription>
