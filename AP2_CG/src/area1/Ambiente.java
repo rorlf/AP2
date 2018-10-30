@@ -9,10 +9,15 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import javax.media.j3d.*;
 import javax.swing.JFrame;
 import javax.vecmath.*;
+
+import org.jdesktop.j3d.loaders.vrml97.VrmlLoader;
+
 import javax.media.j3d.*;
 import javax.vecmath.*;
 import com.sun.j3d.utils.geometry.*;
 import com.sun.j3d.utils.universe.*;
+import com.sun.j3d.loaders.Scene;
+import com.sun.j3d.loaders.objectfile.ObjectFile;
 import com.sun.j3d.utils.behaviors.vp.*;
 
 
@@ -195,9 +200,38 @@ Cylinder cylinder7 = new Cylinder(0.05f,trunkHeight,yellowApp);
 	      tgCylinder7.addChild(cylinder7);   
 	      
 	      
+	      
+	      
+	      ObjectFile f = new ObjectFile(ObjectFile.RESIZE);
+	      Scene s = null;
+
+	      try
+	      {
+	        s = f.load("R2.obj");
+	      }
+	      catch (Exception e)
+	      {
+	        System.out.println("File loading failed:" + e);
+	      }
+	      
+	      
+
+	      //Generate a transformation group for the loaded object.
+	      Transform3D tfObject = new Transform3D();
+	     
+	      tfObject.rotY(0.5*Math.PI);
+	      tfObject.setTranslation(new Vector3d(1.0f, 0.0f, 1.0f));
+	      tfObject.setScale(0.25);
+	      
+	      TransformGroup tgObject = new TransformGroup(tfObject);
+	      tgObject.addChild(s.getSceneGroup());
+
+
+	      
+	      
 	      BranchGroup theScene = new BranchGroup();
 
-
+	      theScene.addChild(tgObject);
 	      theScene.addChild(tgChao);
 	      theScene.addChild(tgParede);
 	      theScene.addChild(tgParede2);

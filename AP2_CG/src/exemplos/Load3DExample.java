@@ -1,3 +1,4 @@
+package exemplos;
 import javax.vecmath.*;
 import com.sun.j3d.utils.universe.*;
 import javax.media.j3d.*;
@@ -92,7 +93,7 @@ public class Load3DExample extends JFrame
 
     try
     {
-      s = f.load("schiff.obj");
+      s = f.load("Schiff.obj");
     }
     catch (Exception e)
     {

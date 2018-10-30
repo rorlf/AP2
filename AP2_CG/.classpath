@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="bin3d"/>
-	<classpathentry kind="lib" path="/home/rodrigo/Downloads/eclipse-java-2018-09-linux-gtk-x86_64/eclipse/java3d/lib/ext/j3dcore.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="AP2_CG/bin3d"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/rodrigo/Downloads/eclipse-java-2018-09-linux-gtk-x86_64/eclipse/java3d/lib/ext/j3dutils.jar">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="AP2_CG/bin3d"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/rodrigo/Downloads/eclipse-java-2018-09-linux-gtk-x86_64/eclipse/java3d/lib/ext/vecmath.jar">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="AP2_CG/bin3d"/>
 		</attributes>
