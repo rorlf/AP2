@@ -16,11 +16,6 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Android.wrl</name>
-			<type>1</type>
-			<locationURI>PARENT-3-PROJECT_LOC/Android.wrl</locationURI>
-		</link>
-		<link>
 			<name>bin3d</name>
 			<type>2</type>
 			<location>/home/rodrigo/Downloads/eclipse-java-2018-09-linux-gtk-x86_64/eclipse/java3d/lib/bin3d</location>

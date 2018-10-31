@@ -56,7 +56,7 @@ public class Ambiente extends JFrame {
 
 	    //The following three lines enable navigation through the scene using the mouse.
 	    OrbitBehavior ob = new OrbitBehavior(myCanvas3D);
-	    ob.setSchedulingBounds(new BoundingSphere(new Point3d(0.0,0.0,0.0),Double.MAX_VALUE));
+	    ob.setSchedulingBounds(new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0));
 	    simpUniv.getViewingPlatform().setViewPlatformBehavior(ob);
 
 
@@ -229,9 +229,24 @@ Cylinder cylinder7 = new Cylinder(0.05f,trunkHeight,yellowApp);
 
 	      
 	      
+	      
+	      
+
+
+	      
+	      
+	      
+	      
+	      
+	      
+	      
+	      
+	      
+	      
 	      BranchGroup theScene = new BranchGroup();
 
 	      theScene.addChild(tgObject);
+	      
 	      theScene.addChild(tgChao);
 	      theScene.addChild(tgParede);
 	      theScene.addChild(tgParede2);

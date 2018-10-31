@@ -1,4 +1,4 @@
-package teste;
+package collision;
 
 import java.applet.*;
 import java.awt.*;
@@ -11,32 +11,35 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.PlatformGeometry;
 import com.sun.j3d.utils.behaviors.keyboard.*;
 import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
-import com.sun.j3d.utils.geometry.Box;
-import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.loaders.Scene;
 import com.sun.j3d.loaders.objectfile.ObjectFile;
 
-
+import org.jdesktop.j3d.loaders.vrml97.VrmlLoader;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-
 import java.util.*;
 
-public class Mykeynavbeh extends Applet implements KeyListener {
+import com.sun.j3d.utils.geometry.Box;
+import com.sun.j3d.utils.geometry.ColorCube;
+import com.sun.j3d.utils.geometry.Cylinder;
+
+public class Ambiente extends Applet implements KeyListener {
 
  private SimpleUniverse universe = null;
  private Canvas3D canvas = null;
  private TransformGroup viewtrans = null;
 
  private TransformGroup tg = null;
- private Transform3D t3d = null;
+
+ private TransformGroup tg_r2 = null;
+ private Transform3D t3d_r2 = null;
  private Transform3D t3dstep = new Transform3D();
  private Matrix4d matrix = new Matrix4d();
 
- private Robot r2 = null;
-private MovingCar movimentoRobo;
- public Mykeynavbeh() {
+ private BoundingSphere bounds;
+
+ public Ambiente() {
   setLayout(new BorderLayout());
   GraphicsConfiguration config = SimpleUniverse
     .getPreferredConfiguration();
@@ -51,6 +54,7 @@ private MovingCar movimentoRobo;
   universe.getViewer().getView().setBackClipDistance(100.0);
 
   canvas.addKeyListener(this);
+  
   OrbitBehavior ob = new OrbitBehavior(canvas);
   ob.setSchedulingBounds(new BoundingSphere(new Point3d(0.0,0.0,0.0),Double.MAX_VALUE));
   universe.getViewingPlatform().setViewPlatformBehavior(ob);
@@ -61,7 +65,18 @@ private MovingCar movimentoRobo;
  private BranchGroup createSceneGraph() {
   
 
+  // BoundingSphere bounds = new BoundingSphere(new Point3d(), 10000.0);
+  bounds = new BoundingSphere(new Point3d(), 100.0);
 
+  viewtrans = universe.getViewingPlatform().getViewPlatformTransform();
+
+  KeyNavigatorBehavior keyNavBeh = new KeyNavigatorBehavior(viewtrans);
+  keyNavBeh.setSchedulingBounds(bounds);
+  PlatformGeometry platformGeom = new PlatformGeometry();
+  platformGeom.addChild(keyNavBeh);
+  universe.getViewingPlatform().setPlatformGeometry(platformGeom);
+
+  
   Appearance greyApp = new Appearance();
   setToMyDefaultAppearance(greyApp,new Color3f(0.18f,0.30f,0.30f));
   
@@ -83,6 +98,7 @@ Box chao = new Box(5.2f,0.001f,2.5f,whiteApp);
   Transform3D tfChao= new Transform3D();
   tfChao.setTranslation(new Vector3d(0.0f,-0.255f,0.0f));
   TransformGroup tgChao = new TransformGroup(tfChao);
+  tgChao.setCollidable(false);
   tgChao.addChild(chao);
   
   
@@ -136,7 +152,7 @@ Box parede4= new Box(0.001f,0.4f,2.5f,greyApp);
   Transform3D tfPlatformCylinder = new Transform3D();
   tfPlatformCylinder.setTranslation(new Vector3d(4.5f,0.0f,1.5f));
   TransformGroup tgCylinder = new TransformGroup(tfPlatformCylinder);
-  tgCylinder.setCollidable(false);
+  
   tgCylinder.addChild(cylinder);
   	      
 
@@ -145,7 +161,7 @@ Box parede4= new Box(0.001f,0.4f,2.5f,greyApp);
   Transform3D tfPlatformCylinder2 = new Transform3D();
   tfPlatformCylinder2.setTranslation(new Vector3d(4.5f,0.0f,-1.5f));
   TransformGroup tgCylinder2 = new TransformGroup(tfPlatformCylinder2);
-  tgCylinder2.setCollidable(false);
+  
   tgCylinder2.addChild(cylinder2);
   
   
@@ -154,7 +170,7 @@ Cylinder cylinder3 = new Cylinder(0.05f,trunkHeight,yellowApp);
   Transform3D tfPlatformCylinder3 = new Transform3D();
   tfPlatformCylinder3.setTranslation(new Vector3d(1.5f,0.0f,0.0f));
   TransformGroup tgCylinder3 = new TransformGroup(tfPlatformCylinder3);
-  tgCylinder3.setCollidable(false);
+  
   tgCylinder3.addChild(cylinder3);
   
   
@@ -164,7 +180,7 @@ Cylinder cylinder4 = new Cylinder(0.2f,trunkHeight/2,greyApp);
   Transform3D tfPlatformCylinder4 = new Transform3D();
   tfPlatformCylinder4.setTranslation(new Vector3d(0f,-0.15f,0.0f));
   TransformGroup tgCylinder4 = new TransformGroup(tfPlatformCylinder4);
-  tgCylinder4.setCollidable(false);
+  
   tgCylinder4.addChild(cylinder4);
   
   
@@ -173,7 +189,7 @@ Cylinder cylinder5 = new Cylinder(0.05f,trunkHeight,yellowApp);
   Transform3D tfPlatformCylinder5 = new Transform3D();
   tfPlatformCylinder5.setTranslation(new Vector3d(-1.5f,0.0f,0.0f));
   TransformGroup tgCylinder5 = new TransformGroup(tfPlatformCylinder5);
-  tgCylinder5.setCollidable(false);
+  
   tgCylinder5.addChild(cylinder5);    
   
   
@@ -182,7 +198,7 @@ Cylinder cylinder6 = new Cylinder(0.05f,trunkHeight,yellowApp);
   Transform3D tfPlatformCylinder6 = new Transform3D();
   tfPlatformCylinder6.setTranslation(new Vector3d(-4.5f,0.0f,1.5f));
   TransformGroup tgCylinder6 = new TransformGroup(tfPlatformCylinder6);
-  tgCylinder6.setCollidable(false);
+  
   tgCylinder6.addChild(cylinder6);   
   
 Cylinder cylinder7 = new Cylinder(0.05f,trunkHeight,yellowApp);
@@ -190,7 +206,7 @@ Cylinder cylinder7 = new Cylinder(0.05f,trunkHeight,yellowApp);
   Transform3D tfPlatformCylinder7 = new Transform3D();
   tfPlatformCylinder7.setTranslation(new Vector3d(-4.5f,0.0f,-1.5f));
   TransformGroup tgCylinder7 = new TransformGroup(tfPlatformCylinder7);
-  tgCylinder7.setCollidable(false);
+  
   tgCylinder7.addChild(cylinder7);   
   
   
@@ -239,40 +255,51 @@ Cylinder cylinder7 = new Cylinder(0.05f,trunkHeight,yellowApp);
   theScene.addChild(tgCylinder6);
   theScene.addChild(tgCylinder7);
   
-  theScene.addChild(createCar());
+  theScene.addChild(createR2());
 
   return theScene;
+ 
+  
+
+  
  }
 
- private BranchGroup createCar() {
+ private BranchGroup createR2() {
 
   BranchGroup objRoot = new BranchGroup();
-  tg = new TransformGroup();
-  t3d = new Transform3D();
-
-  //tg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-  t3d.rotY(0.5*Math.PI);
-  t3d.setTranslation(new Vector3d(0.0f, 0.0f, -0.0f));
+  bounds = new BoundingSphere(new Point3d(), 1000.0);
   
-  t3d.setScale(1.0);
+  tg = new TransformGroup();
 
-  tg.setTransform(t3d);
+  tg_r2 = new TransformGroup();
+  t3d_r2 = new Transform3D();
 
-  /*
-   * VrmlLoader loader = new VrmlLoader(); Scene s = null;
-   * 
-   * try { s = loader.load("model/Tink71.wrl"); } catch (Exception e) {
-   * System.err.println(e); System.exit(1); }
-   * 
-   * tg.addChild(s.getSceneGroup( ) );
-   */
+  tg_r2.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 
-  r2 = new Robot("src/model/R2.obj");
-  tg.addChild(r2.tg);
-  //car.tg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-movimentoRobo = new MovingCar(r2);
+  t3d_r2.setTranslation(new Vector3d(1.2, 0, -0.5));
+  t3d_r2.setRotation(new AxisAngle4f(0.0f, 1.0f, 0.0f, 1.25f));
+  t3d_r2.setScale(0.25);
 
-  tg.addChild(movimentoRobo);
+  tg_r2.setTransform(t3d_r2);
+
+  ObjectFile f = new ObjectFile(ObjectFile.RESIZE);
+  Scene s = null;
+
+  try {
+   s = f.load("src/model/R2.obj");
+  } catch (Exception e) {
+   System.err.println(e);
+   System.exit(1);
+  }
+
+  tg_r2.addChild(s.getSceneGroup());
+
+  CollisionDetectorGroup cdGroup = new CollisionDetectorGroup(tg_r2);
+  cdGroup.setSchedulingBounds(bounds);
+
+  tg.addChild(tg_r2);
+  
+  tg.addChild(cdGroup);
 
   objRoot.addChild(tg);
   objRoot.addChild(createLight());
@@ -282,6 +309,7 @@ movimentoRobo = new MovingCar(r2);
   return objRoot;
 
  }
+
 
  private Light createLight() {
   DirectionalLight light = new DirectionalLight(true, new Color3f(1.0f,
@@ -297,71 +325,54 @@ movimentoRobo = new MovingCar(r2);
    app.setMaterial(new Material(col,col,col,col,120.0f));
  }
 
-
  public static void main(String[] args) {
-  Mykeynavbeh applet = new Mykeynavbeh();
+  Ambiente applet = new Ambiente();
   Frame frame = new MainFrame(applet, 800, 600);
  }
 
  public void keyTyped(KeyEvent e) {
   char key = e.getKeyChar();
 
+  if (key == 'w') {
+   t3dstep.set(new Vector3d(0.0, 0.0, 0.1));
+   tg_r2.getTransform(t3d_r2);
+   t3d_r2.mul(t3dstep);
+   tg_r2.setTransform(t3d_r2);
+  }
+
   if (key == 'a') {
 
-	  
-	  r2.carZ-=0.1;
-	   
-	  r2.t3d.setTranslation(new Vector3d(r2.carX, r2.carY, r2.carZ));
-	   
-	   
-	  r2.tg.setTransform(r2.t3d);
-//   t3dstep.rotY(Math.PI / 32); 
-//   
-//   r2.t3d.setTranslation(new Vector3d(r2.carX, r2.carY, r2.carZ));
-//   r2.t3d.mul(t3dstep);
-//  
-//   r2.tg.setTransform(r2.t3d);
+   t3dstep.rotY(Math.PI / 32);
+   tg_r2.getTransform(t3d_r2);
+   t3d_r2.get(matrix);
+   t3d_r2.setTranslation(new Vector3d(0.0, 0.0, 0.0));
+   t3d_r2.mul(t3dstep);
+   t3d_r2.setTranslation(new Vector3d(matrix.m03, matrix.m13,
+     matrix.m23));
+   tg_r2.setTransform(t3d_r2);
 
   }
 
   if (key == 'd') {
 
-	  
-	  r2.carZ+=0.1;
-	   
-	  r2.t3d.setTranslation(new Vector3d(r2.carX, r2.carY, r2.carZ));
-	  
-	   
-	  r2.tg.setTransform(r2.t3d);
-//   t3dstep.rotY(-Math.PI / 32);
-//   r2.t3d.setTranslation(new Vector3d(r2.carX, r2.carY, r2.carZ));
-//   r2.t3d.mul(t3dstep);
-//  
-//   r2.tg.setTransform(r2.t3d);
+   t3dstep.rotY(-Math.PI / 32);
+   tg_r2.getTransform(t3d_r2);
+   t3d_r2.get(matrix);
+   t3d_r2.setTranslation(new Vector3d(0.0, 0.0, 0.0));
+   t3d_r2.mul(t3dstep);
+   t3d_r2.setTranslation(new Vector3d(matrix.m03, matrix.m13,
+     matrix.m23));
+   tg_r2.setTransform(t3d_r2);
 
   }
-  
-  
-  if (key == 'w') {
 
-	  r2.carX+=0.1;
-	   
-	  r2.t3d.setTranslation(new Vector3d(r2.carX, r2.carY, r2.carZ));
-	   
-	   
-	  r2.tg.setTransform(r2.t3d);
-	  
-	  }
   if (key == 's') {
+	  t3dstep.set(new Vector3d(0.0, 0.0, -0.1));
+   tg_r2.getTransform(t3d_r2);
+   t3d_r2.mul(t3dstep);
+   tg_r2.setTransform(t3d_r2);
+  }
 
-	  r2.carX-=0.1;
-	   
-	  r2.t3d.setTranslation(new Vector3d(r2.carX, r2.carY, r2.carZ));
-	   
-	   
-	  r2.tg.setTransform(r2.t3d);
-	  
-	  }
 
  }
 
@@ -370,103 +381,40 @@ movimentoRobo = new MovingCar(r2);
 
  public void keyPressed(KeyEvent e) {
  }
- 
- 
- 
-class Robot {
-	
-	public TransformGroup tg = null;
-	  public Transform3D t3d = null;
-	  private Transform3D t3dstep = new Transform3D();	 
-	  private float carX=0,carY=0,carZ=0;
-	 
 
-	  public Robot(String filename) {
+ class CollisionDetectorGroup extends Behavior {
+  private boolean inCollision = false;
+  private Group group;
 
-	   //Revised:
-	   tg = new TransformGroup();
-	   t3d = new Transform3D();
-	   carX=+1f;
-	   carY=0;
-	   carZ=-0.5f;
-	 
-	   t3d.setTranslation(new Vector3d(carX, carY, carZ));
-	   t3d.setScale(0.25);
-	   tg.setTransform(t3d);
-	   //
+  private WakeupOnCollisionEntry wEnter;
+  private WakeupOnCollisionExit wExit;
 
-	   ObjectFile f = new ObjectFile(ObjectFile.RESIZE);
-	   Scene s = null;
+  public CollisionDetectorGroup(Group gp) { // Corrected: gp
+   group = gp; 
+   inCollision = false;
 
-	   try {
-	    s = f.load(filename);
-	   } catch (Exception e) {
-	    System.err.println(e);
-	    System.exit(1);
-	   }
+  }
 
-	   tg.addChild(s.getSceneGroup());
-
-	   tg.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-	 
-	
-	
-}
-	  
-
-
-
-}
-
-
-
- class MovingCar extends Behavior {
-	 public TransformGroup tg = null;
-	  public Transform3D t3d = null;
-  
-  private Transform3D t3dstep = new Transform3D();
-  private WakeupOnElapsedFrames wakeFrame = null;
-  private WakeupOnElapsedTime wakeTime = null;
-  
-  
-  public Robot robot;
-
-  
-
-  public MovingCar(Robot robot) {
-	
-	  
-	this.robot = robot;
-	  tg=robot.tg;
-	  t3d = robot.t3d;
-}
-
-public void initialize() {
-//   wakeFrame = new WakeupOnElapsedFrames(0);
-	  wakeTime = new WakeupOnElapsedTime(1);
-   wakeupOn(wakeTime);
+  public void initialize() {
+   wEnter = new WakeupOnCollisionEntry(group);
+   wExit = new WakeupOnCollisionExit(group);
+   wakeupOn(wEnter);
   }
 
   public void processStimulus(Enumeration criteria) {
-	 
-	  
-	  r2.carZ+=0.1;
-	   
-	  r2.t3d.setTranslation(new Vector3d(r2.carX, r2.carY, r2.carZ));
-	   
-	   
-	  r2.tg.setTransform(r2.t3d);
-	  
-//   t3dstep.set(new Vector3d(-1.0f, 0.0, 0.0f));
-//   robot.tg.getTransform(robot.t3d);
-//   robot.t3d.mul(t3dstep);
-//   robot.tg.setTransform(robot.t3d);
-   
-   wakeupOn(wakeTime);   
-	  
-	
-	
+
+   inCollision = !inCollision;
+   if (inCollision) {
+
+    t3dstep.set(new Vector3d(0.0, 0.0, -0.4));
+    tg_r2.getTransform(t3d_r2);
+    t3d_r2.mul(t3dstep);
+    tg_r2.setTransform(t3d_r2);
+
+    wakeupOn(wExit);
+   } else {
+    wakeupOn(wEnter);
+   }
   }
  }
-
 }
