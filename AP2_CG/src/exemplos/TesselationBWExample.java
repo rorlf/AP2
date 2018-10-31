@@ -1,4 +1,4 @@
-
+package exemplos;
 import javax.vecmath.*;
 import com.sun.j3d.utils.geometry.*;
 import com.sun.j3d.utils.universe.*;

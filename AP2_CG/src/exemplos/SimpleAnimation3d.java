@@ -228,7 +228,7 @@ public class SimpleAnimation3d extends JFrame
     tgmHelicopter.addChild(tgTail);
 
     //Define the movement for the flight.
-    int timeAcc = 300; //The acceleration and breaking phase should last 0.3 seconds.
+    int timeAcc = 30; //The acceleration and breaking phase should last 0.3 seconds.
     //The helicopter fly slightly of from the vertical axis.
     Transform3D helicopterFlightAxis = new Transform3D();
     helicopterFlightAxis.rotZ(0.4*Math.PI);

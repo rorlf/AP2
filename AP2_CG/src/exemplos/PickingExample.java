@@ -1,3 +1,4 @@
+package exemplos;
 import javax.media.j3d.*;
 import com.sun.j3d.utils.picking.*;
 import com.sun.j3d.utils.picking.behaviors.*;
