@@ -1,4 +1,6 @@
-package collision;
+package anda;
+
+
 
 import java.applet.*;
 import java.awt.*;
@@ -23,7 +25,6 @@ import java.util.*;
 import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.ColorCube;
 import com.sun.j3d.utils.geometry.Cylinder;
-import com.sun.j3d.utils.geometry.Primitive;
 
 public class Ambiente extends Applet implements KeyListener {
 
@@ -67,7 +68,7 @@ public class Ambiente extends Applet implements KeyListener {
   
 
   // BoundingSphere bounds = new BoundingSphere(new Point3d(), 10000.0);
-  bounds = new BoundingSphere(new Point3d(), 10.0);
+  bounds = new BoundingSphere(new Point3d(), 100.0);
 
   viewtrans = universe.getViewingPlatform().getViewPlatformTransform();
 
@@ -85,20 +86,10 @@ public class Ambiente extends Applet implements KeyListener {
   
   Box caixa1 = new Box(tamanhocaixa,tamanhocaixa,tamanhocaixa,greyApp);
   
-//  caixa1.setCollisionBounds(new BoundingBox(new Point3d(0.0,0.0,0.0),
-//          new Point3d(tamanhocaixa,
-//        		  tamanhocaixa,
-//        		  tamanhocaixa)));
-//
-//  caixa1.setCollidable(true);
-
-  
   Transform3D tfPlatform = new Transform3D();
   tfPlatform.setTranslation(new Vector3d(-4.5f,-0.15f,0.0f));
   TransformGroup tgPlatform = new TransformGroup(tfPlatform);
   tgPlatform.addChild(caixa1);
-  
-
   
       
 	 Appearance whiteApp = new Appearance();
@@ -114,7 +105,7 @@ Box chao = new Box(5.2f,0.001f,2.5f,whiteApp);
   
   
   
-Box parede= new Box(5.2f,0.4f,0.018f,greyApp);
+Box parede= new Box(5.2f,0.4f,0.001f,greyApp);
   
   Transform3D tfParede= new Transform3D();
   tfParede.setTranslation(new Vector3d(0.0f,0f,-2.5f));
@@ -123,7 +114,7 @@ Box parede= new Box(5.2f,0.4f,0.018f,greyApp);
   
   
   
-Box parede2= new Box(5.2f,0.4f,0.018f,greyApp);
+Box parede2= new Box(5.2f,0.4f,0.001f,greyApp);
   
   Transform3D tfParede2= new Transform3D();
   tfParede2.setTranslation(new Vector3d(0.0f,0f,2.5f));
@@ -133,7 +124,7 @@ Box parede2= new Box(5.2f,0.4f,0.018f,greyApp);
   
   
   
-Box parede3= new Box(0.018f,0.4f,2.5f,greyApp);
+Box parede3= new Box(0.001f,0.4f,2.5f,greyApp);
   
   Transform3D tfParede3= new Transform3D();
   tfParede3.setTranslation(new Vector3d(5.2f,0f,0.0f));
@@ -144,7 +135,7 @@ Box parede3= new Box(0.018f,0.4f,2.5f,greyApp);
   
   
   
-Box parede4= new Box(0.018f,0.4f,2.5f,greyApp);
+Box parede4= new Box(0.001f,0.4f,2.5f,greyApp);
   
   Transform3D tfParede4= new Transform3D();
   tfParede4.setTranslation(new Vector3d(-5.2f,0f,0.0f));
@@ -154,7 +145,7 @@ Box parede4= new Box(0.018f,0.4f,2.5f,greyApp);
   Appearance yellowApp = new Appearance();
   setToMyDefaultAppearance(yellowApp,new Color3f(1f,1f,0.0f));
 
-  bounds = new BoundingSphere(new Point3d(), 0.0);
+
   float trunkHeight = 0.4f;
 
  
@@ -163,7 +154,7 @@ Box parede4= new Box(0.018f,0.4f,2.5f,greyApp);
   Transform3D tfPlatformCylinder = new Transform3D();
   tfPlatformCylinder.setTranslation(new Vector3d(4.5f,0.0f,1.5f));
   TransformGroup tgCylinder = new TransformGroup(tfPlatformCylinder);
-  tgCylinder.setBounds(bounds);
+  
   tgCylinder.addChild(cylinder);
   	      
 
@@ -172,7 +163,7 @@ Box parede4= new Box(0.018f,0.4f,2.5f,greyApp);
   Transform3D tfPlatformCylinder2 = new Transform3D();
   tfPlatformCylinder2.setTranslation(new Vector3d(4.5f,0.0f,-1.5f));
   TransformGroup tgCylinder2 = new TransformGroup(tfPlatformCylinder2);
-  tgCylinder2.setBounds(bounds);
+  
   tgCylinder2.addChild(cylinder2);
   
   
@@ -181,7 +172,7 @@ Cylinder cylinder3 = new Cylinder(0.05f,trunkHeight,yellowApp);
   Transform3D tfPlatformCylinder3 = new Transform3D();
   tfPlatformCylinder3.setTranslation(new Vector3d(1.5f,0.0f,0.0f));
   TransformGroup tgCylinder3 = new TransformGroup(tfPlatformCylinder3);
-  tgCylinder3.setBounds(bounds);
+  
   tgCylinder3.addChild(cylinder3);
   
   
@@ -200,7 +191,7 @@ Cylinder cylinder5 = new Cylinder(0.05f,trunkHeight,yellowApp);
   Transform3D tfPlatformCylinder5 = new Transform3D();
   tfPlatformCylinder5.setTranslation(new Vector3d(-1.5f,0.0f,0.0f));
   TransformGroup tgCylinder5 = new TransformGroup(tfPlatformCylinder5);
-  tgCylinder5.setBounds(bounds);
+  
   tgCylinder5.addChild(cylinder5);    
   
   
@@ -209,7 +200,7 @@ Cylinder cylinder6 = new Cylinder(0.05f,trunkHeight,yellowApp);
   Transform3D tfPlatformCylinder6 = new Transform3D();
   tfPlatformCylinder6.setTranslation(new Vector3d(-4.5f,0.0f,1.5f));
   TransformGroup tgCylinder6 = new TransformGroup(tfPlatformCylinder6);
-  tgCylinder6.setBounds(bounds);
+  
   tgCylinder6.addChild(cylinder6);   
   
 Cylinder cylinder7 = new Cylinder(0.05f,trunkHeight,yellowApp);
@@ -217,7 +208,7 @@ Cylinder cylinder7 = new Cylinder(0.05f,trunkHeight,yellowApp);
   Transform3D tfPlatformCylinder7 = new Transform3D();
   tfPlatformCylinder7.setTranslation(new Vector3d(-4.5f,0.0f,-1.5f));
   TransformGroup tgCylinder7 = new TransformGroup(tfPlatformCylinder7);
-  tgCylinder7.setBounds(bounds);
+  
   tgCylinder7.addChild(cylinder7);   
   
   
@@ -278,7 +269,7 @@ Cylinder cylinder7 = new Cylinder(0.05f,trunkHeight,yellowApp);
  private BranchGroup createR2() {
 
   BranchGroup objRoot = new BranchGroup();
-  bounds = new BoundingSphere(new Point3d(), 10.0);
+  bounds = new BoundingSphere(new Point3d(), 1000.0);
   
   tg = new TransformGroup();
 
@@ -286,11 +277,9 @@ Cylinder cylinder7 = new Cylinder(0.05f,trunkHeight,yellowApp);
   t3d_r2 = new Transform3D();
 
   tg_r2.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-  tg_r2.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
-  tg_r2.setCapability(TransformGroup.ENABLE_PICK_REPORTING);
 
   t3d_r2.setTranslation(new Vector3d(1.2, 0, -0.5));
-//  t3d_r2.setRotation(new AxisAngle4f(0.0f, 1.0f, 0.0f, 1.25f));
+  t3d_r2.setRotation(new AxisAngle4f(0.0f, 1.0f, 0.0f, 1.25f));
   t3d_r2.setScale(0.25);
 
   tg_r2.setTransform(t3d_r2);
@@ -306,29 +295,19 @@ Cylinder cylinder7 = new Cylinder(0.05f,trunkHeight,yellowApp);
   }
 
   tg_r2.addChild(s.getSceneGroup());
-  
- 
-  
-  
-tg_r2.setCollisionBounds(new BoundingBox(new Point3d(-0.42f,-0.6f,-0.5f),
-          new Point3d(0.45f,
-        		  0.8f,
-        		  0.5f)));
 
-tg_r2.setCollidable(true);
-
-  CollisionDetectorGroup cdGroup = new CollisionDetectorGroup(tg_r2);
+  CollisionDetectorGroup cdGroup = new CollisionDetectorGroup(tg_r2);  
   cdGroup.setSchedulingBounds(bounds);
+  
+  AutoMoviment autoMove = new AutoMoviment(tg_r2);
 
   tg.addChild(tg_r2);
   
   tg.addChild(cdGroup);
-  
-
-  
+  tg.addChild(autoMove);
 
   objRoot.addChild(tg);
- 
+  objRoot.addChild(createLight());
 
   objRoot.compile();
 
@@ -337,7 +316,14 @@ tg_r2.setCollidable(true);
  }
 
 
+ private Light createLight() {
+  DirectionalLight light = new DirectionalLight(true, new Color3f(1.0f,
+    1.0f, 1.0f), new Vector3f(-0.3f, 0.2f, -1.0f));
 
+  light.setInfluencingBounds(new BoundingSphere(new Point3d(), 10000.0));
+
+  return light;
+ }
  
  public static void setToMyDefaultAppearance(Appearance app, Color3f col)
  {
@@ -401,16 +387,49 @@ tg_r2.setCollidable(true);
  public void keyPressed(KeyEvent e) {
  }
 
+ 
+ class AutoMoviment extends Behavior {
+	  
+	  private Group group;
+
+	  private  WakeupOnElapsedFrames wEnter;
+	
+
+	  public AutoMoviment(Group gp) { // Corrected: gp
+	   group = gp; 
+	   
+
+	  }
+
+	  public void initialize() {
+	   wEnter = new  WakeupOnElapsedFrames(0);
+	   
+	   wakeupOn(wEnter);
+	  }
+
+	  public void processStimulus(Enumeration criteria) {
+
+	 
+	    t3dstep.set(new Vector3d(0.0, 0.0, -0.4));
+	    tg_r2.getTransform(t3d_r2);
+	    t3d_r2.mul(t3dstep);
+	    tg_r2.setTransform(t3d_r2);
+
+	    wakeupOn(wEnter);
+	   
+	  }
+	 }
+ 
+ 
  class CollisionDetectorGroup extends Behavior {
   private boolean inCollision = false;
   private Group group;
-  
+
   private WakeupOnCollisionEntry wEnter;
   private WakeupOnCollisionExit wExit;
 
-  public CollisionDetectorGroup(Group gp) { 
+  public CollisionDetectorGroup(Group gp) { // Corrected: gp
    group = gp; 
-   
    inCollision = false;
 
   }
@@ -430,8 +449,6 @@ tg_r2.setCollidable(true);
     tg_r2.getTransform(t3d_r2);
     t3d_r2.mul(t3dstep);
     tg_r2.setTransform(t3d_r2);
-    
-    
 
     wakeupOn(wExit);
    } else {
